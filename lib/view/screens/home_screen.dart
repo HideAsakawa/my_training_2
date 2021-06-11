@@ -1,6 +1,8 @@
-import 'package:db_sample_demo/db/database.dart';
 import 'package:db_sample_demo/main.dart';
+import 'package:db_sample_demo/model/db/database.dart';
+import 'package:db_sample_demo/viewmodel/view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,16 +11,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<Question> questions = List();
+  List<Question> questions = [];
 
   @override
   void initState() {
-    _getAllQuestions();
+    //_getAllQuestions();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ViewModel>(context, listen: false);
+    Future(() async {
+      await viewModel.getAllQuiz();
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("DB sample"),
@@ -36,9 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _getAllQuestions() async {
-    questions = await database.allQuestions;
-    setState(() {
-    });
+  Future<void> _getAllQuestions() async {
+
+    // final viewModel = Provider.of<ViewModel>(context, listen: false);
+    // await viewModel.getAllQuiz();
+
+    // questions = await database.allQuestions;
+    // setState(() {
+    // });
   }
 }

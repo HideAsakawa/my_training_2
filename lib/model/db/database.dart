@@ -22,6 +22,7 @@ class MyDatabase extends _$MyDatabase{
   @override
   int get schemaVersion => 1;
 
+  // 全てのクイズデータを取得
   Future<List<Question>> get allQuestions => select(questions).get();
 
 }
@@ -35,5 +36,4 @@ LazyDatabase _openConnection(String dbPath) {
     final file = File(dbPath);
     return VmDatabase(file);
   });
-
 }
