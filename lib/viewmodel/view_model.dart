@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 class ViewModel extends ChangeNotifier {
 
   List<Question> _questions = [];
+  List<Question> get questions => _questions;
 
   Future<void> getAllQuiz() async {
     _questions = await database.allQuestions;
-    print(_questions);
-    print("from_view_model");
+    print("$_questions from _view_model");
     notifyListeners();
   }
 }

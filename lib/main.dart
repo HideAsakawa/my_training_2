@@ -16,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var dbPath = await getDbPath();
   database = MyDatabase(dbPath: dbPath);
+
   runApp(
     ChangeNotifierProvider<ViewModel>(
       create: (context) => ViewModel(),

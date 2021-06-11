@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   List<Question> questions = [];
 
   @override
@@ -28,23 +27,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("DB sample"),
+        title: Text("MVVM Sample"),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        //TODO ListViewの中身
-        itemCount: questions.length,
-        itemBuilder: (_, position) => ListTile(
-          title: Text(questions[position].id.toString()),
-          subtitle: Text(questions[position].toString()),
+      body: Container(
+        child: Consumer<ViewModel>(
+          builder: (context, model, child){
+            return ListView.builder(
+              itemCount: model.questions.length,
+                itemBuilder: (context, int position) => ListTile(
+              title: Text(model.questions[position].question),
+              subtitle: Text(model.questions[position].answer),
+            ),);
+          },
         ),
-
       ),
     );
   }
 
   Future<void> _getAllQuestions() async {
-
     // final viewModel = Provider.of<ViewModel>(context, listen: false);
     // await viewModel.getAllQuiz();
 
