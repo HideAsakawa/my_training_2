@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:db_sample_demo/view/screens/home_screen.dart';
-import 'package:db_sample_demo/viewmodel/view_model.dart';
+import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
