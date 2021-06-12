@@ -9,7 +9,7 @@ class ViewModel extends ChangeNotifier {
 
   Future<void> getAllQuiz() async {
     _questions = await database.allQuestions;
-    print("$_questions from _view_model");
+    //print("$_questions from _view_model");
     notifyListeners();
   }
 }

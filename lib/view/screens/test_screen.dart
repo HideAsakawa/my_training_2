@@ -1,3 +1,4 @@
+import 'package:db_sample_demo/model/db/database.dart';
 import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,8 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen>{
+  List<Question> _shuffledQuestions = [];
+
   @override
   Widget build(BuildContext context) {
 
@@ -16,23 +19,28 @@ class _TestScreenState extends State<TestScreen>{
       await viewModel.getAllQuiz();
     });
 
+    shuffleQuestion(viewModel);
+    print("FirstQuestion$_shuffledQuestions");
+
     return Scaffold(
       appBar: AppBar(
         title: Text("MVVM Sample"),
         centerTitle: true,
       ),
-      body: Container(
-        child: Consumer<ViewModel>(
-          builder: (context, model, child){
-            return ListView.builder(
-              itemCount: model.questions.length,
-              itemBuilder: (context, int position) => ListTile(
-                title: Text(model.questions[position].question),
-                subtitle: Text(model.questions[position].answer),
-              ),);
-          },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Center(child: Text("問題")),
+            Center(child: Text(_shuffledQuestions[0].question,))
+          ],
         ),
       ),
     );
+  }
+
+  shuffleQuestion(ViewModel model) {
+    _shuffledQuestions = model.questions;
+    _shuffledQuestions.shuffle();
   }
 }
