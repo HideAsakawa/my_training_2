@@ -10,30 +10,53 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   List<Question> _shuffledQuestions = [];
+  int _correctQuestionNumber = 0;
+  Color _buttonColor = Colors.amber;
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<ViewModel>(context, listen: false);
+
     Future(() async {
-      final viewModel = Provider.of<ViewModel>(context, listen: false);
-      await viewModel.getAllQuiz();
-      _questionShuffle(viewModel.questions);
+      if (viewModel.questions.isEmpty) {
+        await viewModel.getAllQuiz();
+        _questionShuffle(viewModel.questions);
+        print("getAllQuestion is done");
+      }
     });
 
-    print("FirstQuestion$_shuffledQuestions");
+    print("build_run: $_shuffledQuestions");
 
     return Scaffold(
       appBar: AppBar(
         title: Text("MVVM Sample"),
         centerTitle: true,
       ),
-      body: Consumer <ViewModel>(
+      body: Consumer<ViewModel>(
         builder: (context, model, child) {
-          return ListView.builder(
-              itemCount: model.questions.length,
-              itemBuilder: (context, int position) => ListTile(
-                    title: Text(model.questions[position].question),
-                    subtitle: Text(model.questions[position].answer),
-                  ));
+          print("consumer is done");
+          return Column(
+            children: [
+              Text(model.questions[_correctQuestionNumber].question),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _correctQuestionNumber += 1;
+                    });
+                  },
+                  child: Text(model.questions[_correctQuestionNumber].answer)),
+              Text(model.questions[_correctQuestionNumber].choice1),
+              Text(model.questions[_correctQuestionNumber].choice2),
+              Text(model.questions[_correctQuestionNumber].choice3),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(_buttonColor),
+                ),
+                onPressed: () => _changeButtonColor(),
+                child: Text("Color Change")
+              )
+            ],
+          );
         },
       ),
     );
@@ -42,5 +65,14 @@ class _TestScreenState extends State<TestScreen> {
   _questionShuffle(List<Question> questions) {
     _shuffledQuestions = questions;
     _shuffledQuestions.shuffle();
+    print("question is shuffled");
+  }
+
+  _changeButtonColor() {
+    final viewModel = Provider.of<ViewModel>(context, listen: false);
+    _buttonColor = viewModel.buttonColor;
+    print("ChangeColor is Pressed: $_buttonColor");
+    viewModel.getButtonColor();
+
   }
 }
