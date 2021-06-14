@@ -1,4 +1,6 @@
 import 'package:db_sample_demo/model/db/database.dart';
+import 'package:db_sample_demo/view/component/life_line.dart';
+import 'package:db_sample_demo/view/component/quiz_answer_button.dart';
 import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,27 +37,38 @@ class _TestScreenState extends State<TestScreen> {
       body: Consumer<ViewModel>(
         builder: (context, model, child) {
           print("consumer is done");
-          return Column(
-            children: [
-              Text(model.questions[_correctQuestionNumber].question),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _correctQuestionNumber += 1;
-                    });
-                  },
-                  child: Text(model.questions[_correctQuestionNumber].answer)),
-              Text(model.questions[_correctQuestionNumber].choice1),
-              Text(model.questions[_correctQuestionNumber].choice2),
-              Text(model.questions[_correctQuestionNumber].choice3),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(_buttonColor),
+          return Center(
+            child: Column(
+              children: [
+                Text(model.questions[_correctQuestionNumber].question),
+                LifeLine(),
+
+                QuizAnswerButton(
+                  buttonText: model.questions[_correctQuestionNumber].answer,
+                  onPressed: () => _pushAnswerButton(),
                 ),
-                onPressed: () => _changeButtonColor(),
-                child: Text("Color Change")
-              )
-            ],
+                QuizAnswerButton(
+                  buttonText: model.questions[_correctQuestionNumber].choice1,
+                  onPressed: () => _pushAnswerButton(),
+                ),
+                QuizAnswerButton(
+                  buttonText: model.questions[_correctQuestionNumber].choice2,
+                  onPressed: () => _pushAnswerButton(),
+                ),
+                QuizAnswerButton(
+                  buttonText: model.questions[_correctQuestionNumber].choice3,
+                  onPressed: () => _pushAnswerButton(),
+                ),
+
+                ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(_buttonColor),
+                    ),
+                    onPressed: () => _changeButtonColor(),
+                    child: Text("Color Change"))
+              ],
+            ),
           );
         },
       ),
@@ -68,11 +81,16 @@ class _TestScreenState extends State<TestScreen> {
     print("question is shuffled");
   }
 
+  _pushAnswerButton() {
+    setState(() {
+      _correctQuestionNumber +=1;
+    });
+  }
+
   _changeButtonColor() {
     final viewModel = Provider.of<ViewModel>(context, listen: false);
     _buttonColor = viewModel.buttonColor;
     print("ChangeColor is Pressed: $_buttonColor");
     viewModel.getButtonColor();
-
   }
 }
