@@ -13,7 +13,9 @@ class _LifeLineState extends State<LifeLine> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         LifeLineButton(
-          onPressed:  () => print("pushed telephoneButton"),
+          onPressed:  () {
+            print("pushed telephoneButton");
+          },
           icon: Icon(Icons.call),
         ),
         LifeLineButton(

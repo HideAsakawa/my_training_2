@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:db_sample_demo/view/screens/home_screen.dart';
+import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
 import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,11 +18,14 @@ void main() async {
   var dbPath = await getDbPath();
   database = MyDatabase(dbPath: dbPath);
 
-  runApp(
-    ChangeNotifierProvider<ViewModel>(
-      create: (context) => ViewModel(),
-      child: MyApp(),
-    ),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<ViewModel>(create: (context) => ViewModel()),
+      ChangeNotifierProvider<ButtonControllerViewModel>(create: (_) => ButtonControllerViewModel()),
+    ],
+    child: MyApp(),
+  )
+
   );
 }
 

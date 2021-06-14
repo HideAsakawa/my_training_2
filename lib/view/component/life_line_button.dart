@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LifeLineButton extends StatefulWidget {
-  final _buttonColor = Colors.yellowAccent;
+  final _buttonColor = Colors.amber;
   final icon;
   final onPressed;
-  final _isButtonEnable = true;
+  final isButtonEnable = true;
 
   LifeLineButton({this.onPressed, this.icon});
 
@@ -20,7 +20,7 @@ class _LifeLineButtonState extends State<LifeLineButton> {
         backgroundColor: MaterialStateProperty.all<Color>(widget._buttonColor)
       ),
         onPressed: widget.onPressed,
-        child: widget.icon,
+    child: widget.icon,
     );
   }
 }
