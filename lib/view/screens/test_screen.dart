@@ -8,18 +8,17 @@ class TestScreen extends StatefulWidget {
   _TestScreenState createState() => _TestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen>{
+class _TestScreenState extends State<TestScreen> {
   List<Question> _shuffledQuestions = [];
 
   @override
   Widget build(BuildContext context) {
-
-    final viewModel = Provider.of<ViewModel>(context, listen: false);
     Future(() async {
+      final viewModel = Provider.of<ViewModel>(context, listen: false);
       await viewModel.getAllQuiz();
+      _questionShuffle(viewModel.questions);
     });
 
-    shuffleQuestion(viewModel);
     print("FirstQuestion$_shuffledQuestions");
 
     return Scaffold(
@@ -27,20 +26,21 @@ class _TestScreenState extends State<TestScreen>{
         title: Text("MVVM Sample"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Center(child: Text("問題")),
-            Center(child: Text(_shuffledQuestions[0].question,))
-          ],
-        ),
+      body: Consumer <ViewModel>(
+        builder: (context, model, child) {
+          return ListView.builder(
+              itemCount: model.questions.length,
+              itemBuilder: (context, int position) => ListTile(
+                    title: Text(model.questions[position].question),
+                    subtitle: Text(model.questions[position].answer),
+                  ));
+        },
       ),
     );
   }
 
-  shuffleQuestion(ViewModel model) {
-    _shuffledQuestions = model.questions;
+  _questionShuffle(List<Question> questions) {
+    _shuffledQuestions = questions;
     _shuffledQuestions.shuffle();
   }
 }
