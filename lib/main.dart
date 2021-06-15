@@ -18,14 +18,15 @@ void main() async {
   var dbPath = await getDbPath();
   database = MyDatabase(dbPath: dbPath);
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<ViewModel>(create: (context) => ViewModel()),
-      ChangeNotifierProvider<ButtonControllerViewModel>(create: (_) => ButtonControllerViewModel()),
-    ],
-    child: MyApp(),
-  )
-
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ViewModel>(create: (context) => ViewModel()),
+        ChangeNotifierProvider<ButtonControllerViewModel>(
+            create: (_) => ButtonControllerViewModel()),
+      ],
+      child: MyApp(),
+    ),
   );
 }
 

@@ -1,3 +1,4 @@
+import 'package:db_sample_demo/data/life_line_satus.dart';
 import 'package:db_sample_demo/view/component/life_line_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +14,15 @@ class _LifeLineState extends State<LifeLine> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         LifeLineButton(
-          onPressed:  () {
-            print("pushed telephoneButton");
-          },
+          lifeLineStatus: LIFE_LINE_STATUS.TELEPHONE,
           icon: Icon(Icons.call),
         ),
         LifeLineButton(
-          onPressed: () => print("pushed 1/2Button"),
+          lifeLineStatus: LIFE_LINE_STATUS.FIFTY_FIFTY,
           icon: Icon(Icons.star_half),
         ),
         LifeLineButton(
-          onPressed: () => print("pushed Audience"),
+          lifeLineStatus: LIFE_LINE_STATUS.AUDIENCE,
           icon: Icon(Icons.people),
         ),
       ],
