@@ -3,7 +3,6 @@ import 'package:db_sample_demo/model/db/database.dart';
 import 'package:flutter/material.dart';
 
 class ViewModel extends ChangeNotifier {
-
   List<Question> _questions = [];
   List<Question> get questions => _questions;
 

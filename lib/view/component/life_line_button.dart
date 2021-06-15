@@ -10,7 +10,7 @@ class LifeLineButton extends StatefulWidget {
   final isButtonEnable = true;
   final lifeLineStatus;
 
-  LifeLineButton({this.onPressed, this.icon, this.lifeLineStatus });
+  LifeLineButton({this.onPressed, this.icon, this.lifeLineStatus});
 
   @override
   _LifeLineButtonState createState() => _LifeLineButtonState();
@@ -25,17 +25,23 @@ class _LifeLineButtonState extends State<LifeLineButton> {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
       ),
-        onPressed: () {
-         switch (widget.lifeLineStatus){
-           case LIFE_LINE_STATUS.TELEPHONE : _callTelePhone(); break;
-           case LIFE_LINE_STATUS.FIFTY_FIFTY : _makeQuestionHalf(); break;
-           case LIFE_LINE_STATUS.AUDIENCE : _askAudience(); break;
-         }
-          setState(() {
-            buttonColor = Colors.grey;
-          });
-        },
-    child: widget.icon,
+      onPressed: () {
+        switch (widget.lifeLineStatus) {
+          case LIFE_LINE_STATUS.TELEPHONE:
+            _callTelePhone();
+            break;
+          case LIFE_LINE_STATUS.FIFTY_FIFTY:
+            _makeQuestionHalf();
+            break;
+          case LIFE_LINE_STATUS.AUDIENCE:
+            _askAudience();
+            break;
+        }
+        setState(() {
+          buttonColor = Colors.grey;
+        });
+      },
+      child: widget.icon,
     );
   }
 
@@ -46,15 +52,13 @@ class _LifeLineButtonState extends State<LifeLineButton> {
 
   // TODO
   _makeQuestionHalf() {
-    var viewModel = Provider.of<ButtonControllerViewModel>(context, listen: false);
+    var viewModel =
+        Provider.of<ButtonControllerViewModel>(context, listen: false);
     viewModel.changeColor();
-    print("pressed_fifty_fifty");
   }
 
   // TODO
   _askAudience() {
     print("pressed_audience");
   }
-
 }
-

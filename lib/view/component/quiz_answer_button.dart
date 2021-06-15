@@ -1,10 +1,6 @@
-import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
-import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class QuizAnswerButton extends StatefulWidget {
-
   final buttonText;
   final onPressed;
   final buttonColor;
@@ -20,7 +16,6 @@ class _QuizAnswerButton extends State<QuizAnswerButton> {
 
   @override
   Widget build(BuildContext context) {
-
     _buttonColor = widget.buttonColor;
     return ElevatedButton(
       style: ButtonStyle(
