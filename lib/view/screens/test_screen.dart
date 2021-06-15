@@ -44,31 +44,34 @@ class _TestScreenState extends State<TestScreen> {
                 children: [
                   Text(model.questions[_correctQuestionNumber].question),
                   LifeLine(),
-
                   // viewModelの種類ごとにConsumerを
                   Consumer<ButtonControllerViewModel>(
                     builder: (context, model, child) {
-                      return QuizAnswerButton(
-                        buttonText: viewModel.questions[_correctQuestionNumber].answer,
-                        buttonColor: model.buttonColor,
-                        onPressed: () => _pushAnswerButton,
+                      return Column(
+                        children: [
+                          QuizAnswerButton(
+                            buttonText: viewModel.questions[_correctQuestionNumber].answer,
+                            buttonColor: model.buttonColor,
+                            onPressed: () => _pushAnswerButton(viewModel.questions[_correctQuestionNumber].answer),
+                          ),
+                          QuizAnswerButton(
+                            buttonText: viewModel.questions[_correctQuestionNumber].choice1,
+                            buttonColor: model.buttonColor,
+                            onPressed: () => _pushAnswerButton(viewModel.questions[_correctQuestionNumber].choice1),
+                          ),
+                          QuizAnswerButton(
+                            buttonText: viewModel.questions[_correctQuestionNumber].choice2,
+                            buttonColor: model.buttonColor,
+                            onPressed: () => _pushAnswerButton(viewModel.questions[_correctQuestionNumber].choice2),
+                          ),
+                          QuizAnswerButton(
+                            buttonText: viewModel.questions[_correctQuestionNumber].choice3,
+                            buttonColor: model.buttonColor,
+                            onPressed: () => _pushAnswerButton(viewModel.questions[_correctQuestionNumber].choice3),
+                          ),
+                        ],
                       );
                     },
-                  ),
-                  QuizAnswerButton(
-                    buttonText: model.questions[_correctQuestionNumber].choice1,
-                    buttonColor: Colors.blueAccent,
-                    onPressed: () => _pushAnswerButton(),
-                  ),
-                  QuizAnswerButton(
-                    buttonText: model.questions[_correctQuestionNumber].choice2,
-                    buttonColor: Colors.blueAccent,
-                    onPressed: () => _pushAnswerButton(),
-                  ),
-                  QuizAnswerButton(
-                    buttonText: model.questions[_correctQuestionNumber].choice3,
-                    buttonColor: Colors.blueAccent,
-                    onPressed: () => _pushAnswerButton(),
                   ),
                 ],
               ),
@@ -85,7 +88,13 @@ class _TestScreenState extends State<TestScreen> {
     print("question is shuffled");
   }
 
-  _pushAnswerButton() {
+  _pushAnswerButton(String userAnswer) {
+    if(userAnswer == _shuffledQuestions[_correctQuestionNumber].answer) {
+      print("正解");
+    } else {
+      print("不正化");
+    }
+
     setState(() {
       _correctQuestionNumber +=1;
     });

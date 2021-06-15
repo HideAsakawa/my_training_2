@@ -1,6 +1,5 @@
 import 'package:db_sample_demo/data/life_line_satus.dart';
 import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
-import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
