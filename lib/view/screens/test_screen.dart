@@ -1,6 +1,7 @@
 import 'package:db_sample_demo/model/db/database.dart';
 import 'package:db_sample_demo/view/component/life_line.dart';
 import 'package:db_sample_demo/view/component/quiz_answer_button.dart';
+import 'package:db_sample_demo/view/component/test_data.dart';
 import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
 import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,10 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   List<Question> _shuffledQuestions = [];
   int _correctQuestionNumber = 0;
+  int _numberOfRemaining = 19;
+  int _numberOfCorrectAnswers = 0;
+  int _correctRate = 0;
+
   QuizAnswerButton choice1;
 
   @override
@@ -25,9 +30,11 @@ class _TestScreenState extends State<TestScreen> {
       if (viewModel.questions.isEmpty) {
         await viewModel.getAllQuiz();
         _questionShuffle(viewModel.questions);
-        print("getAllQuestion is done");
+        print("getAllQuiz is done");
       }
     });
+
+    print("_correctQuestionNumber: $_correctQuestionNumber");
 
     return Scaffold(
       appBar: AppBar(
@@ -38,10 +45,11 @@ class _TestScreenState extends State<TestScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ViewModel>(
           builder: (context, model, child) {
-            print("consumer is done");
+            print("consumer is run");
             return Center(
-              child: Column(
+              child: (viewModel.questions.isNotEmpty) ? Column(
                 children: [
+                  TestData(numberOfRemaining: _numberOfRemaining, numberOfCorrectAnswers: _numberOfCorrectAnswers, correctRate: _correctRate,),
                   Text(model.questions[_correctQuestionNumber].question),
                   LifeLine(),
                   // viewModelの種類ごとにConsumerを
@@ -74,7 +82,7 @@ class _TestScreenState extends State<TestScreen> {
                     },
                   ),
                 ],
-              ),
+              ) : Container(),
             );
           },
         ),
@@ -91,12 +99,19 @@ class _TestScreenState extends State<TestScreen> {
   _pushAnswerButton(String userAnswer) {
     if(userAnswer == _shuffledQuestions[_correctQuestionNumber].answer) {
       print("正解");
+      _numberOfCorrectAnswers += 1;
     } else {
       print("不正化");
     }
 
-    setState(() {
-      _correctQuestionNumber +=1;
-    });
+    if(_numberOfRemaining <= 0) {
+      Navigator.pop(context);
+    } else {
+      setState(() {
+        _correctQuestionNumber +=1;
+        _numberOfRemaining -= 1;
+       _correctRate = (_numberOfCorrectAnswers / (20 - _numberOfRemaining) * 100 ).toInt() ;
+      });
+    }
   }
 }
