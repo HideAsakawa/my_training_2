@@ -23,9 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Image.network("http://placehold.jp/400x300.png"),
               const Text("QuizApp"),
-              SelectToggle(),
-              ModeSelectButton(mode: "START QUIZ", destination: () => toTestScreen(context),),
-              ModeSelectButton(mode: "SHOW RECODES", destination: () => toTestScreen(context),),
+              Expanded(
+                  child: Container(
+                      alignment: Alignment.topCenter, child: SelectToggle())),
+              ModeSelectButton(
+                  mode: "START QUIZ", destination: () => toTestScreen(context)),
+              ModeSelectButton(
+                  mode: "SHOW RECODES",
+                  destination: () => toTestScreen(context)),
             ],
           ),
         ),

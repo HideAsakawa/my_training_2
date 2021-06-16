@@ -13,17 +13,26 @@ class _LifeLineState extends State<LifeLine> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LifeLineButton(
-          lifeLineStatus: LIFE_LINE_STATUS.TELEPHONE,
-          icon: Icon(Icons.call),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: LifeLineButton(
+            lifeLineStatus: LIFE_LINE_STATUS.TELEPHONE,
+            icon: Icon(Icons.call),
+          ),
         ),
-        LifeLineButton(
-          lifeLineStatus: LIFE_LINE_STATUS.FIFTY_FIFTY,
-          icon: Icon(Icons.star_half),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: LifeLineButton(
+            lifeLineStatus: LIFE_LINE_STATUS.FIFTY_FIFTY,
+            icon: Icon(Icons.star_half),
+          ),
         ),
-        LifeLineButton(
-          lifeLineStatus: LIFE_LINE_STATUS.AUDIENCE,
-          icon: Icon(Icons.people),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: LifeLineButton(
+            lifeLineStatus: LIFE_LINE_STATUS.AUDIENCE,
+            icon: Icon(Icons.people),
+          ),
         ),
       ],
     );

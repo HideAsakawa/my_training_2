@@ -21,6 +21,14 @@ class _TestScreenState extends State<TestScreen> {
 
   QuizAnswerButton choice1;
 
+  ViewModel viewModel;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -50,12 +58,19 @@ class _TestScreenState extends State<TestScreen> {
               child: (viewModel.questions.isNotEmpty) ? Column(
                 children: [
                   TestData(numberOfRemaining: _numberOfRemaining, numberOfCorrectAnswers: _numberOfCorrectAnswers, correctRate: _correctRate,),
-                  Text(model.questions[_correctQuestionNumber].question),
+                  const Text("問題", style: TextStyle(fontSize: 27.0),),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(model.questions[_correctQuestionNumber].question, style: TextStyle(fontSize: 20.0),),
+                    ),
+                  ),
                   LifeLine(),
                   // viewModelの種類ごとにConsumerを
                   Consumer<ButtonControllerViewModel>(
                     builder: (context, model, child) {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           QuizAnswerButton(
                             buttonText: viewModel.questions[_correctQuestionNumber].answer,
@@ -108,9 +123,9 @@ class _TestScreenState extends State<TestScreen> {
       Navigator.pop(context);
     } else {
       setState(() {
+        _correctRate = (_numberOfCorrectAnswers / (20 - _numberOfRemaining) * 100 ).toInt() ;
         _correctQuestionNumber +=1;
         _numberOfRemaining -= 1;
-       _correctRate = (_numberOfCorrectAnswers / (20 - _numberOfRemaining) * 100 ).toInt() ;
       });
     }
   }

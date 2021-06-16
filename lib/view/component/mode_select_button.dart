@@ -13,13 +13,12 @@ class ModeSelectButton extends StatefulWidget {
 class _ModeSelectButtonState extends State<ModeSelectButton> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: widget.destination,
-          child: Text(widget.mode),
-        )
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: widget.destination,
+        child: Text(widget.mode),
+      ),
     );
   }
 }

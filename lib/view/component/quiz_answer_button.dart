@@ -17,12 +17,15 @@ class _QuizAnswerButton extends State<QuizAnswerButton> {
   @override
   Widget build(BuildContext context) {
     _buttonColor = widget.buttonColor;
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(_buttonColor),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(_buttonColor),
+        ),
+        onPressed: widget.onPressed,
+        child: Text(widget.buttonText),
       ),
-      onPressed: widget.onPressed,
-      child: Text(widget.buttonText),
     );
   }
 }
