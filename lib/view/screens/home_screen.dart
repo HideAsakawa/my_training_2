@@ -1,11 +1,7 @@
-import 'package:db_sample_demo/main.dart';
-import 'package:db_sample_demo/model/db/database.dart';
 import 'package:db_sample_demo/view/component/mode_select_button.dart';
 import 'package:db_sample_demo/view/component/select_toggle.dart';
 import 'package:db_sample_demo/view/screens/test_screen.dart';
-import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:db_sample_demo/model/db/database.dart';
 import 'package:db_sample_demo/view/component/life_line.dart';
 import 'package:db_sample_demo/view/component/quiz_answer_button.dart';
@@ -5,7 +7,9 @@ import 'package:db_sample_demo/view/component/test_data.dart';
 import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
 import 'package:db_sample_demo/view_model/view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:soundpool/soundpool.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -18,15 +22,41 @@ class _TestScreenState extends State<TestScreen> {
   int _numberOfRemaining = 19;
   int _numberOfCorrectAnswers = 0;
   int _correctRate = 0;
-
-  QuizAnswerButton choice1;
-
   ViewModel viewModel;
+  Soundpool _soundpool;
+  int _soundIdIncorrect = 0;
+  int _soundIdCorrect = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    initSounds();
+  }
+
+  void initSounds() async {
+    try {
+      _soundpool = Soundpool.fromOptions();
+      _soundIdCorrect = await loadSounds("assets/sounds/sound_correct.mp3");
+      _soundIdCorrect = await loadSounds("assets/sounds/sound_incorrect.mp3");
+      setState(() {
+
+      });
+    } on IOException catch (error){
+      print("errorの内容は$errorです");
+    }
+
+  }
+
+  Future<int> loadSounds(String soundPath) {
+    return rootBundle.load(soundPath).then((value) => _soundpool.load(value));
+  }
+
+
 
   @override
   void dispose() {
+    _soundpool.dispose();
     super.dispose();
-
   }
 
   @override
@@ -66,7 +96,6 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                   LifeLine(),
-                  // viewModelの種類ごとにConsumerを
                   Consumer<ButtonControllerViewModel>(
                     builder: (context, model, child) {
                       return Column(
