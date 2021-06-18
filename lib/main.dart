@@ -1,8 +1,6 @@
 import 'dart:io';
-
-import 'package:db_sample_demo/view/screens/home_screen.dart';
-import 'package:db_sample_demo/view_model/button_controller_viewmodel.dart';
-import 'package:db_sample_demo/view_model/view_model.dart';
+import 'package:db_sample_demo/view/screens/test_screen.dart';
+import 'package:db_sample_demo/view_model/quiz_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -18,16 +16,10 @@ void main() async {
   var dbPath = await getDbPath();
   database = MyDatabase(dbPath: dbPath);
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ViewModel>(create: (context) => ViewModel()),
-        ChangeNotifierProvider<ButtonControllerViewModel>(
-            create: (_) => ButtonControllerViewModel()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(ChangeNotifierProvider(
+    create: (_) => QuizDataViewModel(),
+    child: MyApp(),
+  ));
 }
 
 Future<String> getDbPath() async {
@@ -49,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "DB sample",
       theme: ThemeData.dark(),
-      home: HomeScreen(),
+      home: TestScreen(),
     );
   }
 }
