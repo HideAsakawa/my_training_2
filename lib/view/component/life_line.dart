@@ -6,12 +6,15 @@ class LifeLine extends StatefulWidget {
 }
 
 class _LifeLineState extends State<LifeLine> {
+  Color _buttonColor = Colors.yellow;
+  bool _isButtonEnable = true;
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-        onPressed: () => null,
+        onPressed: () => _isButtonEnable ? _makeQuestionHalf() : null,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow),
+          backgroundColor: MaterialStateProperty.all<Color>(_buttonColor),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -20,6 +23,14 @@ class _LifeLineState extends State<LifeLine> {
           ),
         ),
         icon: Icon(Icons.star_half),
-        label: Text("1/2",));
+        label: Text("1/2"));
+  }
+
+  _makeQuestionHalf() {
+    print("lifeline is pushed");
+    setState(() {
+      _buttonColor = Colors.grey;
+      _isButtonEnable = false;
+    });
   }
 }
