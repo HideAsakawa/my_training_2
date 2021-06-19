@@ -1,4 +1,6 @@
+import 'package:db_sample_demo/view_model/button_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LifeLine extends StatefulWidget {
   @override
@@ -8,6 +10,7 @@ class LifeLine extends StatefulWidget {
 class _LifeLineState extends State<LifeLine> {
   Color _buttonColor = Colors.yellow;
   bool _isButtonEnable = true;
+  ButtonController _buttonController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,12 @@ class _LifeLineState extends State<LifeLine> {
   _makeQuestionHalf() {
     print("lifeline is pushed");
     setState(() {
-      _buttonColor = Colors.grey;
-      _isButtonEnable = false;
+      _buttonController = Provider.of<ButtonController>(context, listen: false);
+      _buttonController.setButtonColor(Colors.grey);
+
+      // TODO falseをセットし直す
+      //_buttonColor = Colors.grey;
+      _isButtonEnable = true;
     });
   }
 }

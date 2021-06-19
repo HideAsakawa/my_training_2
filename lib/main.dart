@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:db_sample_demo/view/screens/home_screen.dart';
-import 'package:db_sample_demo/view/screens/test_screen.dart';
+import 'package:db_sample_demo/view_model/button_controller.dart';
 import 'package:db_sample_demo/view_model/quiz_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,10 +17,19 @@ void main() async {
   var dbPath = await getDbPath();
   database = MyDatabase(dbPath: dbPath);
 
-  runApp(ChangeNotifierProvider(
-    create: (_) => QuizDataViewModel(),
-    child: MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<QuizDataViewModel>(
+          create: (_) => QuizDataViewModel(),
+        ),
+        ChangeNotifierProvider<ButtonController>(
+            create: (_) => ButtonController(),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 Future<String> getDbPath() async {

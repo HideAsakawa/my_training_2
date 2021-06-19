@@ -3,6 +3,7 @@ import 'package:db_sample_demo/view/component/answer_part.dart';
 import 'package:db_sample_demo/view/component/life_line.dart';
 import 'package:db_sample_demo/view/component/question_panel.dart';
 import 'package:db_sample_demo/view/component/quiz_data.dart';
+import 'package:db_sample_demo/view_model/button_controller.dart';
 import 'package:db_sample_demo/view_model/quiz_data_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class _TestScreenState extends State<TestScreen> {
   int _numberOfCorrectAnswer = 0;
   int _correctRate = 0;
   int _currentQuestionNumber = 0;
-  List<Question> _shuffledQuestions = [];
+  //List<Question> _shuffledQuestions = [];
+  ButtonController _answerButtonColor;
 
   QuizDataViewModel _quizViewModel;
 
@@ -64,8 +66,10 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   _nextQuestion() {
+    _answerButtonColor = Provider.of<ButtonController>(context, listen: false);
     setState(() {
       print("onPressed");
+      _answerButtonColor.setButtonColor(Colors.green);
       _currentQuestionNumber += 1;
       _numberOfRemaining -= 1;
     });
