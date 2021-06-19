@@ -1,5 +1,6 @@
 import 'package:db_sample_demo/model/db/database.dart';
 import 'package:db_sample_demo/view/component/answer_part.dart';
+import 'package:db_sample_demo/view/component/life_line.dart';
 import 'package:db_sample_demo/view/component/question_panel.dart';
 import 'package:db_sample_demo/view/component/quiz_data.dart';
 import 'package:db_sample_demo/view_model/quiz_data_view_model.dart';
@@ -15,44 +16,58 @@ class _TestScreenState extends State<TestScreen> {
   int _numberOfRemaining = 20;
   int _numberOfCorrectAnswer = 0;
   int _correctRate = 0;
-  List<Question> _allQuestions = [];
+  int _currentQuestionNumber = 0;
+  List<Question> _shuffledQuestions = [];
 
-  QuizDataViewModel _quizDataViewModel;
+  QuizDataViewModel _quizViewModel;
 
   @override
   void initState() {
-    _numberOfRemaining -= 1;
+    _numberOfRemaining = _numberOfRemaining - 1;
     _numberOfCorrectAnswer = 0;
     _correctRate = 0;
+    _currentQuestionNumber = 0;
     getAllQuestion();
     super.initState();
   }
 
   getAllQuestion() async {
-    _quizDataViewModel = Provider.of<QuizDataViewModel>(context, listen: false);
-    await _quizDataViewModel.getAllQuestion();
-    print(_quizDataViewModel.allQuestion);
+    _quizViewModel = Provider.of<QuizDataViewModel>(context, listen: false);
+    await _quizViewModel.getAllQuestion();
+    print("init:");
+    setState(() {
+    });
   }
-
 
 
   @override
   Widget build(BuildContext context) {
+    print("build:");
     return Scaffold(
       appBar: AppBar(title: Text("Quiz MVVM Edition"), centerTitle: true),
-      body: Column(
+      body: _quizViewModel.allQuestion.isEmpty ? Container() : Column(
         children: <Widget>[
           QuizData(
             numberOfRemaining: _numberOfRemaining,
             numberOfCorrect: _numberOfCorrectAnswer,
             correctRate: _correctRate,
           ),
-          const Text("問題", style: TextStyle(fontSize: 20.0),),
-          QuestionPanel(),
-          // TODO LifeLine(),
-          AnswerPart(),
+          QuestionPanel(currentQuestion: _quizViewModel.allQuestion[_currentQuestionNumber].question,),
+          LifeLine(),
+          AnswerButtonPart(
+            questions: _quizViewModel.allQuestion[_currentQuestionNumber],
+            onPressed: () => _nextQuestion(),
+          ),
         ],
       ),
     );
+  }
+
+  _nextQuestion() {
+    setState(() {
+      print("onPressed");
+      _currentQuestionNumber += 1;
+      _numberOfRemaining -= 1;
+    });
   }
 }

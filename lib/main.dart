@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:db_sample_demo/view/screens/home_screen.dart';
 import 'package:db_sample_demo/view/screens/test_screen.dart';
 import 'package:db_sample_demo/view_model/quiz_data_view_model.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "DB sample",
       theme: ThemeData.dark(),
-      home: TestScreen(),
+      home: HomeScreen(),
     );
   }
 }

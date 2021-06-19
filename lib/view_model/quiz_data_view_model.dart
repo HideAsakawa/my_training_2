@@ -9,6 +9,7 @@ class QuizDataViewModel extends ChangeNotifier {
 
   Future<void> getAllQuestion() async {
     _allQuestion = await database.allQuestions;
+    _allQuestion.shuffle();
     notifyListeners();
   }
 }
